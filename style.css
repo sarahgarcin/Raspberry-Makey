@@ -1,0 +1,39 @@
+body {
+	width: 100%;
+}
+
+#container img {
+	position: absolute;
+}	
+	
+#container img.bite {
+	top: 10px;
+	left:30px;
+}
+
+#container img.cat {
+	top: -200px;
+	left:500px;
+}
+
+#container img.rond {
+	top: -200px;
+	left:500px;
+}
+
+
+#container img.square {
+	-webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+#container img.rond {
+	-webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
