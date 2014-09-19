@@ -54,7 +54,7 @@ $(document).ready(function() {
                         now = 1;
                     $(document).keypress(function(e){
 							if(e.which == 101){
-                        		el.stop().animate(elattrs[+(now = !now)], 1000);
+                        		el.stop().animate(elattrs[+(now = !now)], 200);
                         	}
                     });
                 })();
