@@ -16,7 +16,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 97){
+                        if(e.which == 102){
                             el.stop().animate(elattrs[+(now = !now)], 2000);
                         }
                     });
@@ -32,7 +32,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 122){
+                        if(e.which == 32){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -46,7 +46,7 @@ $(document).ready(function() {
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
-                        if(e.which == 101){
+                        if(e.which == 103){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -60,10 +60,8 @@ $(document).ready(function() {
                     var el = r.path(path1).attr({fill: "#fff", "fill-opacity": 0, stroke: "#fff", "stroke-width": 2}),
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
-                    $(document).keypress(function(e){
-                        if(e.which == 114){
-                            el.stop().animate(elattrs[+(now = !now)], 1000);
-                        }
+                    $(document).click(function(e){
+                        el.stop().animate(elattrs[+(now = !now)], 1000);
                     });
                 })(); 
                 // rond 2-2
@@ -75,8 +73,7 @@ $(document).ready(function() {
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
-                        console.log(e.which, " is keydown");
-                        if(e.which == 116){
+                        if(e.which == 97){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -91,7 +88,6 @@ $(document).ready(function() {
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
-                        console.log(e.which, " is keydown");
                         if(e.which == 121){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
@@ -107,7 +103,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 117){
+                        if(e.which == 100){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -123,7 +119,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 105){
+                        if(e.which == 115){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -139,7 +135,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 111){
+                        if(e.which == 113){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -154,7 +150,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 112){
+                        if(e.which == 122){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -170,7 +166,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 113){
+                        if(e.which == 97){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -186,7 +182,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 115){
+                        if(e.which == 197){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
