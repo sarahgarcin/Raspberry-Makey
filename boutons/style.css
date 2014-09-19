@@ -1,0 +1,37 @@
+body {
+	width: 100%;
+	background: #A6A6A6;
+}
+
+svg {
+	width: 1000px;
+	height: 1000px;
+}
+
+#container img {
+	position: absolute;
+}	
+	
+#container img.bite {
+	top: 10px;
+	left:30px;
+}
+
+#container img.cat {
+	top: -200px;
+	left:500px;
+}
+
+#container img.rond {
+	top: -200px;
+	left:500px;
+}
+
+
+#container img {
+	-webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
