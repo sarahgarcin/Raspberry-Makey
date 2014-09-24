@@ -1,38 +1,36 @@
 $(document).ready(function() {
 
-	Raphael.fn.arrow = function (x, y) {
-                return this.path(["M", x, y] + "m-10-10l20,0 0-6 10,16 -10,16 0-6 -20,0 0,6 -10-16 10-16z").attr({fill: "#fff", stroke: "none", "stroke-dasharray": "-", "fill-opacity": 0.2});
-   	};
             window.onload = function () {
                 // var r = Raphael("holder", 619, 419),
                 var r = Raphael("holder", 619, 419), //Raphael(0, 0, "100%", "100%"),
                     dashed = {fill: "none", stroke: "#666", "stroke-dasharray": "- "};
                 // rond 1-1
                 (function () {
-                    var path1 = "M50.5,120.5c11,0 20,9 20,20c0,11 -9,20 -20,20c-11,0 -20-9 -20-20c0-11 9-20 20-20z";
+                    var path1 = "M50.5,20.5c11,0 20,9 20,20c0,11 -9,20 -20,20c-11,0 -20-9 -20-20c0-11 9-20 20-20z";
+                    var path2 = "m 302.55742,112.06246 506.31373,1.11088 -206.67272,400.63142 z";
                     r.path(path1).attr({fill: "#fff", "fill-opacity": 0, stroke: "#fff", "stroke-width": 2, "stroke-opacity": 0.5});
                     var el = r.path(path1).attr({fill: "#fff", "fill-opacity": 0, stroke: "#fff", "stroke-width": 2}),
-                    elattrs = [{path: "m 402.55742,212.06246 206.31373,1.11088 -96.67272,176.63142 z", fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
+                    elattrs = [{path:path2 , fill: "green", "fill-opacity": 1,  stroke: "none"}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 102){
-                            el.stop().animate(elattrs[+(now = !now)], 2000);
+                        if(e.which == 97){
+                            // el.stop().animate(elattrs[+(now = !now)], 2000);
+                            $('#canvasball').css('display', 'block');
                         }
                     });
                 })(); 
 
-                // rond 1-2
                 (function () {
-                    var path1 = "M50.5,20.5c11,0 20,9 20,20c0,11 -9,20 -20,20c-11,0 -20-9 -20-20c0-11 9-20 20-20z";
-                    var path2 = "m 459.99998,369.50503 -107.78596,4.53174 -57.37237,91.36062 -37.61764,-101.11015 -104.61815,-26.33238 84.53698,-67.02126 -7.2852,-107.63493 89.86437,59.68874 100.11564,-40.18966 -28.99774,103.91093 z";
+                    var path1 = "M50.5,120.5c11,0 20,9 20,20c0,11 -9,20 -20,20c-11,0 -20-9 -20-20c0-11 9-20 20-20z";
+                    var path2 = "m 959.99998,269.50503 -107.78596,4.53174 -57.37237,91.36062 -37.61764,-101.11015 -104.61815,-26.33238 84.53698,-67.02126 -7.2852,-107.63493 89.86437,59.68874 100.11564,-40.18966 -28.99774,103.91093 z";
                     r.path(path1).attr({fill: "#fff", "fill-opacity": 0, stroke: "#fff", "stroke-width": 2, "stroke-opacity": 0.5});
                     var el = r.path(path1).attr({fill: "#fff", "fill-opacity": 0, stroke: "#fff", "stroke-width": 2}),
-                    elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
+                    elattrs = [{path: path2, fill: "yellow", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 32){
+                        if(e.which == 122){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -46,8 +44,9 @@ $(document).ready(function() {
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
-                        if(e.which == 103){
-                            el.stop().animate(elattrs[+(now = !now)], 1000);
+                        if(e.which == 101){
+                          // el.stop().animate(elattrs[+(now = !now)], 1000);
+                          $('#canvas2').css('display', 'block');
                         }
                     });
                 })(); 
@@ -73,7 +72,7 @@ $(document).ready(function() {
                     elattrs = [{path: path2, fill: "#000", "fill-opacity": 1,  stroke: "#fff", "stroke-width": 2}, {path:path1, fill: "#fff", "fill-opacity": 0}],
                     now = 1;
                     $(document).keypress(function(e){
-                        if(e.which == 97){
+                        if(e.which == 100){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -150,7 +149,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 122){
+                        if(e.which == 100){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });
@@ -166,7 +165,7 @@ $(document).ready(function() {
                     now = 1;
                     $(document).keypress(function(e){
                         console.log(e.which, " is keydown");
-                        if(e.which == 97){
+                        if(e.which == 100){
                             el.stop().animate(elattrs[+(now = !now)], 1000);
                         }
                     });

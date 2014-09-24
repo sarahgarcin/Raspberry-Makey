@@ -1,176 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="style.css">
-
-	<script src="js/jquery-1.10.1.min.js" type="text/javascript"></script>
-	<script src="js/paper.js" type="text/javascript"></script>
-	<script src="js/raphael.js"></script>
-	<script src="script.js" type="text/javascript"></script>
-
-    <script type="text/paperscript" canvas="canvasball">
-
-    	function Ball(r, p, v) {
-	        this.radius = r;
-	        this.point = p;
-	        this.vector = v;
-	        this.maxVec = 15;
-	        this.numSegment = Math.floor(r / 3 + 2);
-	        this.boundOffset = [];
-	        this.boundOffsetBuff = [];
-	        this.sidePoints = [];
-	        this.path = new Path({
-	            fillColor: {
-	                hue: Math.random() * 360,
-	                saturation: 1,
-	                brightness: 2
-	            },
-	        blendMode: 'screen'
-        });
-
-        for (var i = 0; i < this.numSegment; i ++) {
-            this.boundOffset.push(this.radius);
-            this.boundOffsetBuff.push(this.radius);
-            this.path.add(new Point());
-            this.sidePoints.push(new Point({
-                angle: 360 / this.numSegment * i,
-                length: 1
-            }));
-        }
-    }
-
-    Ball.prototype = {
-        iterate: function() {
-            this.checkBorders();
-            if (this.vector.length > this.maxVec)
-                this.vector.length = this.maxVec;
-            this.point += this.vector;
-            this.updateShape();
-        },
-
-        checkBorders: function() {
-            var size = view.size;
-            if (this.point.x < -this.radius)
-                this.point.x = size.width + this.radius;
-            if (this.point.x > size.width + this.radius)
-                this.point.x = -this.radius;
-            if (this.point.y < -this.radius)
-                this.point.y = size.height + this.radius;
-            if (this.point.y > size.height + this.radius)
-                this.point.y = -this.radius;
-        },
-
-        updateShape: function() {
-            var segments = this.path.segments;
-            for (var i = 0; i < this.numSegment; i ++)
-                segments[i].point = this.getSidePoint(i);
-
-            this.path.smooth();
-            for (var i = 0; i < this.numSegment; i ++) {
-                if (this.boundOffset[i] < this.radius / 4)
-                    this.boundOffset[i] = this.radius / 4;
-                var next = (i + 1) % this.numSegment;
-                var prev = (i > 0) ? i - 1 : this.numSegment - 1;
-                var offset = this.boundOffset[i];
-                offset += (this.radius - offset) / 15;
-                offset += ((this.boundOffset[next] + this.boundOffset[prev]) / 2 - offset) / 3;
-                this.boundOffsetBuff[i] = this.boundOffset[i] = offset;
-            }
-        },
-
-        react: function(b) {
-            var dist = this.point.getDistance(b.point);
-            if (dist < this.radius + b.radius && dist != 0) {
-                var overlap = this.radius + b.radius - dist;
-                var direc = (this.point - b.point).normalize(overlap * 0.015);
-                this.vector += direc;
-                b.vector -= direc;
-
-                this.calcBounds(b);
-                b.calcBounds(this);
-                this.updateBounds();
-                b.updateBounds();
-            }
-        },
-
-        getBoundOffset: function(b) {
-            var diff = this.point - b;
-            var angle = (diff.angle + 180) % 360;
-            return this.boundOffset[Math.floor(angle / 360 * this.boundOffset.length)];
-        },
-
-        calcBounds: function(b) {
-            for (var i = 0; i < this.numSegment; i ++) {
-                var tp = this.getSidePoint(i);
-                var bLen = b.getBoundOffset(tp);
-                var td = tp.getDistance(b.point);
-                if (td < bLen) {
-                    this.boundOffsetBuff[i] -= (bLen  - td) / 2;
-                }
-            }
-        },
-
-        getSidePoint: function(index) {
-            return this.point + this.sidePoints[index] * this.boundOffset[index];
-        },
-
-        updateBounds: function() {
-            for (var i = 0; i < this.numSegment; i ++)
-                this.boundOffset[i] = this.boundOffsetBuff[i];
-        }
-    };
-
-    //--------------------- main ---------------------
-
-    var balls = [];
-    var numBalls = 10;
-    for (var i = 0; i < numBalls; i++) {
-        var position = Point.random() * view.size;
-        var vector = new Point({
-            angle: 360 * Math.random(),
-            length: Math.random() * 10
-        });
-        var radius = Math.random() * 20 + 40;
-        balls.push(new Ball(radius, position, vector));
-    }
-
-    function onFrame() {
-        for (var i = 0; i < balls.length - 1; i++) {
-            for (var j = i + 1; j < balls.length; j++) {
-                balls[i].react(balls[j]);
-            }
-        }
-        for (var i = 0, l = balls.length; i < l; i++) {
-            balls[i].iterate();
-        }
-    }
-
-    </script>
-    <script type="text/paperscript" canvas="canvasrond">
-        // http://en.wikipedia.org/wiki/Lenna
-        // Load from Server:
-        var raster = new Raster('http://www.pochoirdeco.com/boutique/images_produits/rond53cm-z.jpg');
-        // Load from DOM image:
-        // var raster = new Raster('lenna');
-        raster.onLoad = function() {
-            console.log('Successfully loaded image!');
-        };
-        var lastScale = 1;
-        var center = view.center;
-        function onFrame(event) {
-            var scale = (Math.sin(event.time * 2) + 1) / 2;
-            raster.scale(scale / lastScale);
-            lastScale = scale;
-            raster.position = center + [Math.sin(event.time * 2) * 100, Math.sin(event.time * 1) * 100];
-            raster.rotate(event.delta * 20);
-        }
-
-    </script>
-
-    <script type="text/paperscript" canvas="canvas2">
+    <meta charset="UTF-8">
+    <title>Tadpoles</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="text/javascript" src="../../dist/paper-full.js"></script>
+    <script type="text/paperscript" canvas="canvas">
+        // Adapted from Flocking Processing example by Daniel Schiffman:
+        // http://processing.org/learning/topics/flocking.html
 
         var Boid = Base.extend({
             initialize: function(position, maxSpeed, maxForce) {
@@ -196,7 +33,7 @@
                 this.borders();
                 this.update();
                 this.calculateTail();
-                // this.moveHead();
+                this.moveHead();
             },
 
             calculateTail: function() {
@@ -223,33 +60,33 @@
             },
 
             createItems: function() {
-                // this.head = new Shape.Ellipse({
-                //     center: [0, 0],
-                //     size: [30, 30],
-                //     fillColor: 'blue'
-                // });
+                this.head = new Shape.Ellipse({
+                    center: [0, 0],
+                    size: [13, 8],
+                    fillColor: 'white'
+                });
 
                 this.path = new Path({
-                    strokeColor: 'blue',
-                    strokeWidth: 8,
+                    strokeColor: 'white',
+                    strokeWidth: 2,
                     strokeCap: 'round'
                 });
                 for (var i = 0; i < this.amount; i++)
                     this.path.add(new Point());
 
                 this.shortPath = new Path({
-                    strokeColor: 'blue',
-                    strokeWidth: 8,
+                    strokeColor: 'white',
+                    strokeWidth: 4,
                     strokeCap: 'round'
                 });
                 for (var i = 0; i < Math.min(3, this.amount); i++)
                     this.shortPath.add(new Point());
             },
 
-            // moveHead: function() {
-            //     this.head.position = this.position;
-            //     this.head.rotation = this.vector.angle;
-            // },
+            moveHead: function() {
+                this.head.position = this.position;
+                this.head.rotation = this.vector.angle;
+            },
 
             // We accumulate a new acceleration each time based on three rules
             flock: function(boids) {
@@ -415,20 +252,32 @@
                 boids[i].run(boids);
             }
         }
+
+        // Reposition the heart path whenever the window is resized:
+        function onResize(event) {
+            heartPath.fitBounds(view.bounds);
+            heartPath.scale(0.8);
+        }
+
+        function onMouseDown(event) {
+            groupTogether = !groupTogether;
+        }
+
+        function onKeyDown(event) {
+            if (event.key == 'space') {
+                var layer = project.activeLayer;
+                layer.selected = !layer.selected;
+                return false;
+            }
+        }
     </script>
+    <style>
+        body {
+            background: black;
+        }
+    </style>
 </head>
 <body>
-
-    <div id="holder" style="position:absolute;">
-    	<svg></svg>
-    	 <canvas id="canvasball" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-    	 <canvas id="canvasrond" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-
-    	 <canvas id="canvas2" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-    </div>
-
-   
-    
+    <canvas id="canvas" resize></canvas>
 </body>
-
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TEST</title>
+    <script type="text/javascript" src="paper.js"></script>
+    <script type="text/javascript">
+
+                window.onload = function() {
+                    var canvas = document.getElementById('canvasRond');
+                    paper.setup(canvas);
+                    var raster = new paper.Raster('http://www.pochoirdeco.com/boutique/images_produits/rond53cm-z.jpg');
+                    raster.onLoad = function() {
+                        console.log('Successfully loaded image!');
+                    };
+                    var lastScale = 1;
+                    var center = paper.view.center;
+                    function onFrame(event) {
+                        var scale = (Math.sin(event.time * 2) + 1) / 2;
+                        raster.scale(scale / lastScale);
+                        lastScale = scale;
+                        raster.position = center + [Math.sin(event.time * 2) * 100, Math.sin(event.time * 1) * 100];
+                        raster.rotate(event.delta * 20);
+                    }
+                    paper.view.draw();
+                }
+    </script>   
+</head>
+<body style="width:1280px; height:800px;">
+    <canvas id="canvasRond" style="width:1280px; height:800px; position:absolute; overflow:none;">
+    </canvas>
+</body>
+</html>
+
+
+

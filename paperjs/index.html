@@ -1,155 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="style.css">
-
-	<script src="js/jquery-1.10.1.min.js" type="text/javascript"></script>
-	<script src="js/paper.js" type="text/javascript"></script>
-	<script src="js/raphael.js"></script>
-	<script src="script.js" type="text/javascript"></script>
-
-    <script type="text/paperscript" canvas="canvasball">
-
-    	function Ball(r, p, v) {
-	        this.radius = r;
-	        this.point = p;
-	        this.vector = v;
-	        this.maxVec = 15;
-	        this.numSegment = Math.floor(r / 3 + 2);
-	        this.boundOffset = [];
-	        this.boundOffsetBuff = [];
-	        this.sidePoints = [];
-	        this.path = new Path({
-	            fillColor: {
-	                hue: Math.random() * 360,
-	                saturation: 1,
-	                brightness: 2
-	            },
-	        blendMode: 'screen'
-        });
-
-        for (var i = 0; i < this.numSegment; i ++) {
-            this.boundOffset.push(this.radius);
-            this.boundOffsetBuff.push(this.radius);
-            this.path.add(new Point());
-            this.sidePoints.push(new Point({
-                angle: 360 / this.numSegment * i,
-                length: 1
-            }));
-        }
-    }
-
-    Ball.prototype = {
-        iterate: function() {
-            this.checkBorders();
-            if (this.vector.length > this.maxVec)
-                this.vector.length = this.maxVec;
-            this.point += this.vector;
-            this.updateShape();
-        },
-
-        checkBorders: function() {
-            var size = view.size;
-            if (this.point.x < -this.radius)
-                this.point.x = size.width + this.radius;
-            if (this.point.x > size.width + this.radius)
-                this.point.x = -this.radius;
-            if (this.point.y < -this.radius)
-                this.point.y = size.height + this.radius;
-            if (this.point.y > size.height + this.radius)
-                this.point.y = -this.radius;
-        },
-
-        updateShape: function() {
-            var segments = this.path.segments;
-            for (var i = 0; i < this.numSegment; i ++)
-                segments[i].point = this.getSidePoint(i);
-
-            this.path.smooth();
-            for (var i = 0; i < this.numSegment; i ++) {
-                if (this.boundOffset[i] < this.radius / 4)
-                    this.boundOffset[i] = this.radius / 4;
-                var next = (i + 1) % this.numSegment;
-                var prev = (i > 0) ? i - 1 : this.numSegment - 1;
-                var offset = this.boundOffset[i];
-                offset += (this.radius - offset) / 15;
-                offset += ((this.boundOffset[next] + this.boundOffset[prev]) / 2 - offset) / 3;
-                this.boundOffsetBuff[i] = this.boundOffset[i] = offset;
-            }
-        },
-
-        react: function(b) {
-            var dist = this.point.getDistance(b.point);
-            if (dist < this.radius + b.radius && dist != 0) {
-                var overlap = this.radius + b.radius - dist;
-                var direc = (this.point - b.point).normalize(overlap * 0.015);
-                this.vector += direc;
-                b.vector -= direc;
-
-                this.calcBounds(b);
-                b.calcBounds(this);
-                this.updateBounds();
-                b.updateBounds();
-            }
-        },
-
-        getBoundOffset: function(b) {
-            var diff = this.point - b;
-            var angle = (diff.angle + 180) % 360;
-            return this.boundOffset[Math.floor(angle / 360 * this.boundOffset.length)];
-        },
-
-        calcBounds: function(b) {
-            for (var i = 0; i < this.numSegment; i ++) {
-                var tp = this.getSidePoint(i);
-                var bLen = b.getBoundOffset(tp);
-                var td = tp.getDistance(b.point);
-                if (td < bLen) {
-                    this.boundOffsetBuff[i] -= (bLen  - td) / 2;
-                }
-            }
-        },
-
-        getSidePoint: function(index) {
-            return this.point + this.sidePoints[index] * this.boundOffset[index];
-        },
-
-        updateBounds: function() {
-            for (var i = 0; i < this.numSegment; i ++)
-                this.boundOffset[i] = this.boundOffsetBuff[i];
-        }
-    };
-
-    //--------------------- main ---------------------
-
-    var balls = [];
-    var numBalls = 10;
-    for (var i = 0; i < numBalls; i++) {
-        var position = Point.random() * view.size;
-        var vector = new Point({
-            angle: 360 * Math.random(),
-            length: Math.random() * 10
-        });
-        var radius = Math.random() * 20 + 40;
-        balls.push(new Ball(radius, position, vector));
-    }
-
-    function onFrame() {
-        for (var i = 0; i < balls.length - 1; i++) {
-            for (var j = i + 1; j < balls.length; j++) {
-                balls[i].react(balls[j]);
-            }
-        }
-        for (var i = 0, l = balls.length; i < l; i++) {
-            balls[i].iterate();
-        }
-    }
-
-    </script>
-    <script type="text/paperscript" canvas="canvasrond">
+    <meta charset="UTF-8">
+    <title>Raster</title>
+    <script type="text/javascript" src="paper.js"></script>
+    <script type="text/paperscript" canvas="canvas">
         // http://en.wikipedia.org/wiki/Lenna
         // Load from Server:
         var raster = new Raster('http://www.pochoirdeco.com/boutique/images_produits/rond53cm-z.jpg');
@@ -169,8 +24,7 @@
         }
 
     </script>
-
-    <script type="text/paperscript" canvas="canvas2">
+<script type="text/paperscript" canvas="canvas2">
 
         var Boid = Base.extend({
             initialize: function(position, maxSpeed, maxForce) {
@@ -416,19 +270,190 @@
             }
         }
     </script>
+
+    <script type="text/paperscript" canvas="canvas3">
+
+    function Ball(r, p, v) {
+        this.radius = r;
+        this.point = p;
+        this.vector = v;
+        this.maxVec = 15;
+        this.numSegment = Math.floor(r / 3 + 2);
+        this.boundOffset = [];
+        this.boundOffsetBuff = [];
+        this.sidePoints = [];
+        this.path = new Path({
+            fillColor: {
+                hue: Math.random() * 360,
+                saturation: 1,
+                brightness: 2
+            },
+            blendMode: 'screen'
+        });
+
+        for (var i = 0; i < this.numSegment; i ++) {
+            this.boundOffset.push(this.radius);
+            this.boundOffsetBuff.push(this.radius);
+            this.path.add(new Point());
+            this.sidePoints.push(new Point({
+                angle: 360 / this.numSegment * i,
+                length: 1
+            }));
+        }
+    }
+
+    Ball.prototype = {
+        iterate: function() {
+            this.checkBorders();
+            if (this.vector.length > this.maxVec)
+                this.vector.length = this.maxVec;
+            this.point += this.vector;
+            this.updateShape();
+        },
+
+        checkBorders: function() {
+            var size = view.size;
+            if (this.point.x < -this.radius)
+                this.point.x = size.width + this.radius;
+            if (this.point.x > size.width + this.radius)
+                this.point.x = -this.radius;
+            if (this.point.y < -this.radius)
+                this.point.y = size.height + this.radius;
+            if (this.point.y > size.height + this.radius)
+                this.point.y = -this.radius;
+        },
+
+        updateShape: function() {
+            var segments = this.path.segments;
+            for (var i = 0; i < this.numSegment; i ++)
+                segments[i].point = this.getSidePoint(i);
+
+            this.path.smooth();
+            for (var i = 0; i < this.numSegment; i ++) {
+                if (this.boundOffset[i] < this.radius / 4)
+                    this.boundOffset[i] = this.radius / 4;
+                var next = (i + 1) % this.numSegment;
+                var prev = (i > 0) ? i - 1 : this.numSegment - 1;
+                var offset = this.boundOffset[i];
+                offset += (this.radius - offset) / 15;
+                offset += ((this.boundOffset[next] + this.boundOffset[prev]) / 2 - offset) / 3;
+                this.boundOffsetBuff[i] = this.boundOffset[i] = offset;
+            }
+        },
+
+        react: function(b) {
+            var dist = this.point.getDistance(b.point);
+            if (dist < this.radius + b.radius && dist != 0) {
+                var overlap = this.radius + b.radius - dist;
+                var direc = (this.point - b.point).normalize(overlap * 0.015);
+                this.vector += direc;
+                b.vector -= direc;
+
+                this.calcBounds(b);
+                b.calcBounds(this);
+                this.updateBounds();
+                b.updateBounds();
+            }
+        },
+
+        getBoundOffset: function(b) {
+            var diff = this.point - b;
+            var angle = (diff.angle + 180) % 360;
+            return this.boundOffset[Math.floor(angle / 360 * this.boundOffset.length)];
+        },
+
+        calcBounds: function(b) {
+            for (var i = 0; i < this.numSegment; i ++) {
+                var tp = this.getSidePoint(i);
+                var bLen = b.getBoundOffset(tp);
+                var td = tp.getDistance(b.point);
+                if (td < bLen) {
+                    this.boundOffsetBuff[i] -= (bLen  - td) / 2;
+                }
+            }
+        },
+
+        getSidePoint: function(index) {
+            return this.point + this.sidePoints[index] * this.boundOffset[index];
+        },
+
+        updateBounds: function() {
+            for (var i = 0; i < this.numSegment; i ++)
+                this.boundOffset[i] = this.boundOffsetBuff[i];
+        }
+    };
+
+    //--------------------- main ---------------------
+
+    var balls = [];
+    var numBalls = 10;
+    for (var i = 0; i < numBalls; i++) {
+        var position = Point.random() * view.size;
+        var vector = new Point({
+            angle: 360 * Math.random(),
+            length: Math.random() * 10
+        });
+        var radius = Math.random() * 20 + 40;
+        balls.push(new Ball(radius, position, vector));
+    }
+
+    function onFrame() {
+        for (var i = 0; i < balls.length - 1; i++) {
+            for (var j = i + 1; j < balls.length; j++) {
+                balls[i].react(balls[j]);
+            }
+        }
+        for (var i = 0, l = balls.length; i < l; i++) {
+            balls[i].iterate();
+        }
+    }
+
+    </script>
+
+    <script type="text/paperscript" canvas="canvas4">
+        var lineGroup = new Group();
+        var lineCount = 30;
+        for (var i = 0; i < lineCount; i++) {
+            var linePath = new Path.Line([0, 0], [0, 0]);
+            lineGroup.addChild(linePath);
+        }
+        lineGroup.strokeColor = 'green';
+
+        var path1 = new Path('M63.39307,265.71387c10.8667,6.96631 26.4707,12.26025 43.18896,12.26025c24.79932,0 39.28857,-13.09619 39.28857,-32.04346c0,-17.27588 -10.03125,-27.58545 -35.38721,-37.05908c-30.65088,-11.146 -49.59814,-27.30713 -49.59814,-53.49902c0,-29.25732 24.2417,-50.9917 60.74365,-50.9917c18.94727,0 33.1582,4.4585 41.23877,9.19531L156.18018,133.35986c-5.85156,-3.62256 -18.39014,-8.9165 -35.38721,-8.9165c-25.63525,0 -35.3877,15.3252 -35.3877,28.14258c0,17.5542 11.42432,26.19238 37.33789,36.22314c31.76514,12.26025 47.64795,27.58545 47.64795,55.1709c0,28.979 -21.17676,54.33496 -65.48096,54.33496c-18.11133,0 -37.89502,-5.57275 -47.92578,-12.26025z');
+        path1.position = view.center;
+
+        var path2 = path1.clone();
+        path1.scale(4);
+        path2.scale(5);
+
+        var length1 = path1.length;
+        var length2 = path2.length;
+        function onFrame(event) {
+            var vector = new Point({
+                angle: -event.count % 360,
+                length: 300
+            });
+            path1.rotate(-0.5);
+            path1.position = view.center - vector;
+
+            path2.rotate(-0.5);
+            path2.position = view.center + vector.normalize(50);
+
+            for (var i = 0; i < lineCount; i++) {
+                var path = lineGroup.children[i];
+                var l1 = (length1 / lineCount * (i + event.count / 10)) % length1;
+                var l2 = (length2 / lineCount * (i + event.count / 10)) % length2;
+                path.firstSegment.point = path1.getPointAt(l1),
+                path.lastSegment.point = path2.getPointAt(l2);
+            }
+        }
+    </script>
 </head>
 <body>
+    <canvas id="canvas" style="width:1280px; height:800px; position:absolute; overflow:none;"></canvas>
+    <canvas id="canvas2" style="width:1280px; height:800px; position:absolute; top:0; left:20%;"></canvas>
+    <canvas id="canvas3" style="width:1280px; height:800px; position:absolute; top:0; left:0;"></canvas>
 
-    <div id="holder" style="position:absolute;">
-    	<svg></svg>
-    	 <canvas id="canvasball" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-    	 <canvas id="canvasrond" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-
-    	 <canvas id="canvas2" style="display:none; position:absolute; top:0; left:0;" resize></canvas>
-    </div>
-
-   
-    
+    <canvas id="canvas4" style="width:1280px; height:800px; position:absolute; top:0; left:0;"></canvas>
 </body>
-
 </html>
