@@ -1,0 +1,10 @@
+body {
+	width: 100%;
+	background: #FFF;
+}
+
+canvas {
+
+	position: absolute;
+}
+
