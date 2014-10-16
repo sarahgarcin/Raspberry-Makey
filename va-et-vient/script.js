@@ -6,6 +6,8 @@ $(document).ready(function() {
     $("#tomate").hide();
     $("#carotte").hide();
     $("#chutney").hide();
+    $("#epautre").hide();
+    $("#tofu").hide();
 
 
 
@@ -26,6 +28,12 @@ $(document).ready(function() {
             break;
              case 116: 
                 $("#carotte").show();
+            break;
+            case 121: 
+                $("#epautre").show();
+            break;
+            case 117: 
+                $("#tofu").show();
             break;
         }
 
