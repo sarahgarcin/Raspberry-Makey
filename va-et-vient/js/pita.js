@@ -15,7 +15,7 @@ var amount = 10;
             position += delta / 10;
             for (var i = 1; i < amount; i++) {
                 var path = children[i];
-                var length = Math.abs(Math.sin(i + count / 40) * 500);
+                var length = Math.abs(Math.sin(i + count / 40) * 300);
                 path.segments = [
                     position + delta / 1.5,
                     position + { angle: i / amount * 360, length: length },
