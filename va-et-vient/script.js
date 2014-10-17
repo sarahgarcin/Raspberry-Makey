@@ -1,16 +1,17 @@
 $(document).ready(function() {
 
-    $('#champignons').hide();
-    $('#algues').hide();
-    $("#bettrave").hide();
-    $("#tomate").hide();
-    $("#carotte").hide();
-    $("#chutney").hide();
-    $("#epautre").hide();
-    $("#tofu").hide();
-    $("#mousse").hide();
-    $("#pita").hide();
-    $("#pois").hide();
+    $('canvas').css('display', 'none');
+    // $('#champignons')..css('display', 'none');
+    // $('#algues').hide();
+    // $("#bettrave").hide();
+    // $("#tomate").hide();
+    // $("#carotte").hide();
+    // $("#chutney").hide();
+    // $("#epautre").hide();
+    // $("#tofu").hide();
+    // $("#mousse").hide();
+    // $("#pita").hide();
+    // $("#pois").hide();
 
     var count = 0;
     var active = $(document).find('.active').length;
@@ -23,13 +24,13 @@ $(document).ready(function() {
             switch (e.which){
                 case 101:
                     if($('#champignons').hasClass('active')){
-                        $('#champignons').hide();
+                        $('#champignons').css('display', 'none');
                         $('#champignons').removeClass('active');
                         $('.champignons').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#champignons').show();
+                        $('#champignons').css('display', 'block');
                         $('#champignons').addClass('active');
                         $('.champignons').css('background-color', '#CF8B56');
                         count ++;
@@ -37,13 +38,13 @@ $(document).ready(function() {
                 break;
                 case 121:
                     if($('#algues').hasClass('active')){
-                        $('#algues').hide();
+                        $('#algues').css('display', 'none');
                         $('#algues').removeClass('active');
                         $('.algues').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#algues').show();
+                        $('#algues').css('display', 'block');
                         $('#algues').addClass('active');
                         $('.algues').css('background-color', '#3A668F');
                         count ++;
@@ -51,13 +52,13 @@ $(document).ready(function() {
                 break;
                 case 102:
                     if($('#bettrave').hasClass('active')){
-                        $('#bettrave').hide();
+                        $('#bettrave').css('display', 'none');
                         $('#bettrave').removeClass('active');
                         $('.bettrave').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#bettrave').show();
+                        $('#bettrave').css('display', 'block');
                         $('#bettrave').addClass('active');
                         $('.bettrave').css('background-color', '#E43B82');
                         count ++;
@@ -65,13 +66,13 @@ $(document).ready(function() {
                 break;
                 case 103: 
                     if($('#tomate').hasClass('active')){
-                        $('#tomate').hide();
+                        $('#tomate').css('display', 'none');
                         $('#tomate').removeClass('active');
                         $('.tomate').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#tomate').show();
+                        $('#tomate').css('display', 'block');
                         $('#tomate').addClass('active');
                         $('.tomate').css('background-color', '#E9284A');
                         count ++;
@@ -79,13 +80,13 @@ $(document).ready(function() {
                 break;
                  case 114: 
                     if($('#carotte').hasClass('active')){
-                        $('#carotte').hide();
+                        $('#carotte').css('display', 'none');
                         $('#carotte').removeClass('active');
                         $('.carotte').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#carotte').show();
+                        $('#carotte').css('display', 'block');
                         $('#carotte').addClass('active');
                         $('.carotte').css('background-color', '#F0655D');
                         count ++;
@@ -93,13 +94,13 @@ $(document).ready(function() {
                 break;
                 case 122: 
                     if($('#epautre').hasClass('active')){
-                        $('#epautre').hide();
+                        $('#epautre').css('display', 'none');
                         $('#epautre').removeClass('active');
                         $('.epautre').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#epautre').show();
+                        $('#epautre').css('display', 'block');
                         $('#epautre').addClass('active');
                         $('.epautre').css('background-color', '#F88721');
                         count ++;
@@ -107,13 +108,13 @@ $(document).ready(function() {
                 break;
                 case 104: 
                     if($('#tofu').hasClass('active')){
-                        $('#tofu').hide();
+                        $('#tofu').css('display', 'none');
                         $('#tofu').removeClass('active');
                         $('.tofu').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#tofu').show();
+                        $('#tofu').css('display', 'block');
                         $('#tofu').addClass('active');
                         $('.tofu').css('background-color', '#F7C352');
                         count ++;
@@ -121,13 +122,13 @@ $(document).ready(function() {
                 break;
                 case 116: 
                     if($('#mousse').hasClass('active')){
-                        $('#mousse').hide();
+                        $('#mousse').css('display', 'none');
                         $('#mousse').removeClass('active');
                         $('.mousse').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#mousse').show();
+                        $('#mousse').css('display', 'block');
                         $('#mousse').addClass('active');
                         $('.mousse').css('background-color', '#05BAA3');
                         count ++;
@@ -135,13 +136,13 @@ $(document).ready(function() {
                 break;
                 case 117: 
                     if($('#pita').hasClass('active')){
-                        $('#pita').hide();
+                        $('#pita').css('display', 'none');
                         $('#pita').removeClass('active');
                         $('.pita').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#pita').show();
+                        $('#pita').css('display', 'block');
                         $('#pita').addClass('active');
                         $('.pita').css('background-color', '#563354');
                         count ++;
@@ -149,13 +150,13 @@ $(document).ready(function() {
                 break;
                 case 115: 
                     if($('#pois').hasClass('active')){
-                        $('#pois').hide();
+                        $('#pois').css('display', 'none');
                         $('#pois').removeClass('active');
                         $('.pois').css('background-color', 'transparent');
                          count --;
                     }
                     else{
-                        $('#pois').show();
+                        $('#pois').css('display', 'block');
                         $('#pois').addClass('active');
                         $('.pois').css('background-color', '#F8AEAF');
                          count ++;
